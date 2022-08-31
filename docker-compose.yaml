@@ -1,0 +1,28 @@
+version: "3"
+services:
+  titanc-app:
+    image: samaraghu0804/titanic-app:init
+    ports:
+      - "8080:9000"
+    networks:
+      - titanic
+    depends_on:
+      - mysqldb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/titanic
+      - SPRING_DATASOURCE_PASSWORD=admin12345
+      - SPRING_DATASOURCE_USERNAME=root
+      - SERVER_PORT=9000
+
+  mysqldb:
+    image: samaraghu0804/titanic-db:init
+    expose:
+      - 3306
+    networks:
+      - titanic
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin12345
+      - MYSQL_DATABASE=titanc
+
+networks:
+  titanic:
