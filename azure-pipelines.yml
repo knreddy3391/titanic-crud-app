@@ -18,14 +18,14 @@ jobs:
     - task: DockerInstaller@0
       inputs:
         dockerVersion: '17.09.0-ce'
-    
     - task: Docker@2
       inputs:
         containerRegistry: 'azure-javaapps-cr'
         repository: 'javaapps.azurecr.io/titanic-db'
-        command: 'build'
+        command: 'buildAndPush'
         Dockerfile: 'psql.dockerfile'
-      displayName: docker build db
+        buildContext: 
+
     - script: |
                docker images
                docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d javaapps.azurecr.io/titanic-db:$(Build.BuildId)
