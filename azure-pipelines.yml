@@ -8,7 +8,7 @@ trigger:
 
 pool: 
   vmImage: ubuntu-latest
-  demands: docker
+
 variables:
   - name: Build.BuildId
     value: 0.0.1
