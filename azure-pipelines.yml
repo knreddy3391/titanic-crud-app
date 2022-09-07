@@ -22,11 +22,13 @@ jobs:
     - task: Docker@2
       inputs:
         containerRegistry: 'azure-javaapps-cr'
-        repository: 'javaapps'
+        repository: 'titanic-db'
         command: 'build'
         Dockerfile: '**/psql.dockerfile'
+        buildContext: 'javaapps.azurecr.io'
 
     - script: |
+               docker images
                docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d javaapps.azurecr.io/titanic-db:$(Build.BuildId)
     - task: Maven@3
       inputs:
