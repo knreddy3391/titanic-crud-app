@@ -21,14 +21,14 @@ jobs:
     - task: Docker@2
       inputs:
         containerRegistry: 'azure-javaapps-cr'
-        repository: 'javaapps.azurecr.io/titanic-db'
+        repository: 'titanic-db'
         command: 'buildAndPush'
         Dockerfile: 'psql.dockerfile'
         buildContext: 
 
     - script: |
                docker images
-               docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d javaapps.azurecr.io/titanic-db:$(Build.BuildId)
+               docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d titanic-db:$(Build.BuildId)
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
