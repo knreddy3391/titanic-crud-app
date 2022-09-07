@@ -47,3 +47,16 @@ jobs:
         repository: 'titanic-app'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+    - task: replacetokens@5
+      inputs:
+        targetFiles: '*.yaml'
+        encoding: 'auto'
+        tokenPattern: 'azpipelines'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
