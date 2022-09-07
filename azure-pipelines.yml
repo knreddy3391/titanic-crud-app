@@ -6,8 +6,12 @@
 trigger:
 - main
 
-pool: Machines
-
+pool: 
+  vmImage: ubuntu-latest
+  demands: docker
+variables:
+  - name: Build.BuildId
+    value: 0.0.1
 jobs:
   - job:
     steps:
@@ -22,8 +26,10 @@ jobs:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
-    - task: PublishBuildArtifacts@1
+
+    - task: Docker@2
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: '**/*.jar'
-        publishLocation: 'Container'
+        containerRegistry: 'azure-javaapps-cr'
+        repository: 'titanic-app'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
