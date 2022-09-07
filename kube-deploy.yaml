@@ -15,7 +15,7 @@ spec:
         app: titanic-db
     spec:
       containers:
-        - image: samaraghu0804/titanic-db
+        - image: javaapps.azurecr.io/titanic-db:$(Build.BuildId)
           name: titanic-db
           ports:
             - containerPort: 5432
@@ -43,7 +43,7 @@ spec:
         app: titanic-app
     spec:
       containers:
-        - image: samaraghu0804/titanic-app:latest
+        - image: javaapps.azurecr.io/titanic-app:$(Build.BuildId)
           name: titanic-app
           imagePullPolicy: Always
           env:
