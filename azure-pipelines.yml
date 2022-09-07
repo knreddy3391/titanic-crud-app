@@ -40,7 +40,8 @@ jobs:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
-
+   
+   
     - task: Docker@2
       inputs:
         containerRegistry: 'azure-javaapps-cr'
@@ -60,3 +61,13 @@ jobs:
         enableRecursion: false
         useLegacyPattern: false
         enableTelemetry: true
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: '*.yaml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'kubernetes'
+        publishLocation: 'Container'
