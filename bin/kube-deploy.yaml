@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: titanic-db
+  name: titanic-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titanic-db
+  template:
+    metadata:
+      labels:
+        app: titanic-db
+    spec:
+      containers:
+        - image: javaapps.azurecr.io/titanic-db:$(Build.BuildId)
+          name: titanic-db
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dbconf
+                  key: postgressPwd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: titanic-app
+  name: titanic-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titanic-app
+  template:
+    metadata:
+      labels:
+        app: titanic-app
+    spec:
+      containers:
+        - image: javaapps.azurecr.io/titanic-app:$(Build.BuildId)
+          name: titanic-app
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: appconf
+                  key: Username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: appconf
+                  key: Password
+            - name: SERVER_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: appconf
+                  key: serverPort
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://db-svc:5432/

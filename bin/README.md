@@ -1,0 +1,8 @@
+# CRUD APP
+* Adipisicing irure ea incididunt irure irure sit ipsum nulla duis velit ipsum laborum labore. Elit anim anim nisi sunt. Qui incididunt laborum deserunt enim elit qui sit laborum consectetur Lorem reprehenderit. Ea duis occaecat ut duis occaecat eu. Labore anim mollit dolore ea pariatur. Aliqua nulla adipisicing reprehenderit aute cillum elit proident veniam incididunt.
+
+* Exercitation dolore minim nulla proident non voluptate dolore ut sint. Voluptate labore sunt culpa cillum deserunt fugiat ullamco magna aliqua id laborum consequat. Amet incididunt excepteur Lorem nisi eiusmod eu.
+
+* Aliquip veniam adipisicing et sit eu proident in aliquip amet irure magna. Ut exercitation pariatur duis nisi et consectetur anim dolore sunt enim dolor. Quis ullamco pariatur magna culpa qui amet id minim incididunt ut duis. Eiusmod fugiat quis et ullamco ex veniam anim ut nisi magna aliquip veniam. Ipsum consequat dolore ea tempor exercitation magna proident non proident amet culpa laboris excepteur aliquip. Non commodo enim esse deserunt deserunt amet velit dolor reprehenderit ex laborum eiusmod eiusmod proident.
+
+* Ut est reprehenderit Lorem laborum non. Consequat sunt Lorem culpa dolor amet sint duis eu excepteur consectetur esse. Esse labore aliqua quis veniam consequat elit magna duis. In fugiat amet ut tempor qui dolor minim velit sunt aliquip cillum exercitation dolore. Magna velit aliquip fugiat ea culpa adipisicing enim voluptate ipsum.

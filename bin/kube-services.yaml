@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: titanic-svc
+  name: titanic-svc
+spec:
+  ports:
+    - name: http
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+      nodePort: 30041
+  selector:
+    app: titanic-app
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db-svc
+  name: db-svc
+spec:
+  ports:
+    - name: titanic-db-port
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: titanic-db
+  type: ClusterIP

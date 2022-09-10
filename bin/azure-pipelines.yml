@@ -1,0 +1,73 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool: 
+  vmImage: ubuntu-latest
+
+variables:
+  - name: Build.BuildId
+    value: 0.0.1
+jobs:
+  - job:
+    steps:
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'azure-javaapps-cr'
+        repository: 'titanic-db'
+        command: 'buildAndPush'
+        Dockerfile: 'psql.dockerfile'
+        buildContext: 
+
+    - script: |
+               docker images
+               docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d javaapps.azurecr.io/titanic-db:$(Build.BuildId)
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean test package'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+   
+   
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'azure-javaapps-cr'
+        repository: 'titanic-app'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+    - task: replacetokens@5
+      inputs:
+        targetFiles: '*.yaml'
+        encoding: 'auto'
+        tokenPattern: 'azpipelines'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: '*.yaml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'kubernetes'
+        publishLocation: 'Container'
