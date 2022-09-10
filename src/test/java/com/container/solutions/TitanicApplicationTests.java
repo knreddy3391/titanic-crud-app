@@ -8,6 +8,7 @@ class TitanicApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 }
