@@ -28,7 +28,7 @@ jobs:
 
     - script: |
                docker images
-               docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d titanic_acr.azurecr.io/titanicdb:$(Build.BuildId)
+               docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d titanicacr.azurecr.io/titanicdb:$(Build.BuildId)
 
     - script: |
                 echo "$(SONAR_TOKEN)"
@@ -50,32 +50,32 @@ jobs:
         sqMavenPluginVersionChoice: 'latest'
 
    
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'titanic_acr'
-    #     repository: 'titanic-app'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
-    # - task: replacetokens@5
-    #   inputs:
-    #     targetFiles: '*.yaml'
-    #     encoding: 'auto'
-    #     tokenPattern: 'azpipelines'
-    #     writeBOM: true
-    #     actionOnMissing: 'warn'
-    #     keepToken: false
-    #     actionOnNoFiles: 'continue'
-    #     enableTransforms: false
-    #     enableRecursion: false
-    #     useLegacyPattern: false
-    #     enableTelemetry: true
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'titanic_acr'
+        repository: 'titanicapp'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+    - task: replacetokens@5
+      inputs:
+        targetFiles: '*.yaml'
+        encoding: 'auto'
+        tokenPattern: 'azpipelines'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
 
-    # - task: CopyFiles@2
-    #   inputs:
-    #     Contents: '*.yaml'
-    #     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    # - task: PublishBuildArtifacts@1
-    #   inputs:
-    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    #     ArtifactName: 'kubernetes'
-    #     publishLocation: 'Container'
+    - task: CopyFiles@2
+      inputs:
+        Contents: '*.yaml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'kubernetes'
+        publishLocation: 'Container'
