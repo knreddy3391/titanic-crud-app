@@ -16,19 +16,19 @@ variables:
 jobs:
   - job:
     steps:
-    # - task: DockerInstaller@0
-    #   inputs:
-    #     dockerVersion: '17.09.0-ce'
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'titanicacr'
-    #     repository: 'titanicdb'
-    #     command: 'buildAndPush'
-    #     Dockerfile: 'psql.dockerfile'
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'titanicacr'
+        repository: 'titanicdb'
+        command: 'buildAndPush'
+        Dockerfile: 'psql.dockerfile'
 
-    # - script: |
-    #            docker images
-    #            docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d titanicacr.azurecr.io/titanic-db:$(Build.BuildId)
+    - script: |
+               docker images
+               docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d titanicacr.azurecr.io/titanicdb:$(Build.BuildId)
 
     - script: |
                 echo "$(SONAR_TOKEN)"
