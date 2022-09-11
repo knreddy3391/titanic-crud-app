@@ -29,18 +29,23 @@ jobs:
     - script: |
                docker images
                docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d javaapps.azurecr.io/titanic-db:$(Build.BuildId)
+    - script: |
+                echo "$(SONAR_TOKEN)"
+                export SONAR_TOKEN=$(SONAR_TOKEN)
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
-        goals: 'clean test package'
+        goals: 'sonar:sonar verify'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        codeCoverageToolOption: 'JaCoCo'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
         mavenAuthenticateFeed: false
         effectivePomSkip: false
-        sonarQubeRunAnalysis: false
-   
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+
    
     - task: Docker@2
       inputs:
