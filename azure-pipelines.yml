@@ -10,6 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  - group: SonarQube
   - name: Build.BuildId
     value: 0.0.1
 jobs:
@@ -30,8 +31,8 @@ jobs:
     #            docker run -e POSTGRES_PASSWORD=admin123 -p 49158:5432 -d titanicacr.azurecr.io/titanic-db:$(Build.BuildId)
 
     - script: |
-                echo "$[SonarCloud.SONAR_TOKEN]"
-                export SONAR_TOKEN=$[SonarCloud.SONAR_TOKEN]
+                echo "$(SONAR_TOKEN)"
+                export SONAR_TOKEN=$(SONAR_TOKEN)
                 echo "after : $SONAR_TOKEN"
 
     - task: Maven@3
