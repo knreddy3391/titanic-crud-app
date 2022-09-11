@@ -42,6 +42,8 @@ jobs:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         codeCoverageToolOption: 'JaCoCo'
+        codeCoverageFailIfEmpty: true
+        codeCoverageRestoreOriginalPomXml: true
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
         mavenAuthenticateFeed: false
