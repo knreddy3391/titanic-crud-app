@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - group: SonarQube
+  - group: SonarCloud
   - name: Build.BuildId
     value: 0.0.1
 jobs:
